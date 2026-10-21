@@ -1,0 +1,948 @@
+/* ==========================================================================
+   CricLive — Professional Cricket Score Management Dashboard
+   Light Mode (White Theme) by Default with Dark Mode Toggle Support
+   ========================================================================== */
+
+:root {
+    /* --- Light Mode Palette (Default) --- */
+    --bg-page: #f8fafc;
+    --bg-surface: #ffffff;
+    --bg-surface-elevated: #ffffff;
+    --bg-muted: #f1f5f9;
+    --bg-input: #ffffff;
+    --bg-hover: #f1f5f9;
+
+    /* --- Text Colors --- */
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    --text-inverse: #ffffff;
+
+    /* --- Brand & Accents --- */
+    --primary: #059669;        /* Cricket Grass Green */
+    --primary-light: #ecfdf5;
+    --primary-dark: #047857;
+    --accent: #2563eb;         /* Stadium Sapphire Blue */
+    --accent-light: #eff6ff;
+
+    /* --- Cricket Ball & Event Colors --- */
+    --wicket-bg: #dc2626;
+    --wicket-text: #ffffff;
+    --six-bg: #7c3aed;
+    --six-text: #ffffff;
+    --four-bg: #2563eb;
+    --four-text: #ffffff;
+    --dot-bg: #e2e8f0;
+    --dot-text: #475569;
+    --runs-bg: #f8fafc;
+    --runs-border: #cbd5e1;
+    --runs-text: #0f172a;
+    --extra-bg: #d97706;
+    --extra-text: #ffffff;
+
+    /* --- Status Badges --- */
+    --live-bg: #fef2f2;
+    --live-text: #dc2626;
+    --live-dot: #ef4444;
+    --completed-bg: #f0fdf4;
+    --completed-text: #16a34a;
+
+    /* --- Borders & Shadows --- */
+    --border-color: #e2e8f0;
+    --border-subtle: #edf2f7;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+
+    /* --- Spacing & Radius --- */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-full: 9999px;
+
+    /* --- Typography --- */
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+}
+
+/* --- Dark Mode (Optional Switch) --- */
+[data-theme="dark"] {
+    --bg-page: #0b1120;
+    --bg-surface: #1e293b;
+    --bg-surface-elevated: #334155;
+    --bg-muted: #1e293b;
+    --bg-input: #0f172a;
+    --bg-hover: #334155;
+
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #64748b;
+    --text-inverse: #0f172a;
+
+    --primary-light: rgba(5, 150, 105, 0.2);
+    --accent-light: rgba(37, 99, 235, 0.2);
+
+    --border-color: #334155;
+    --border-subtle: #1e293b;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+    --shadow-lg: 0 10px 24px rgba(0,0,0,0.5);
+
+    --dot-bg: #334155;
+    --dot-text: #cbd5e1;
+    --runs-bg: #1e293b;
+    --runs-border: #475569;
+    --runs-text: #f8fafc;
+}
+
+/* ==========================================================================
+   Base & Reset
+   ========================================================================== */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    line-height: 1.5;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   Navbar
+   ========================================================================== */
+.navbar {
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-sm);
+}
+
+.nav-container {
+    max-width: 1380px;
+    margin: 0 auto;
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: 800;
+    font-size: 1.35rem;
+    letter-spacing: -0.02em;
+}
+
+.brand-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    border-radius: var(--radius-md);
+    color: #ffffff;
+}
+
+.brand-badge {
+    background: var(--primary-light);
+    color: var(--primary);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-full);
+    border: 1px solid rgba(5, 150, 105, 0.2);
+    text-transform: uppercase;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-tab {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 1rem;
+    border-radius: var(--radius-md);
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.nav-tab:hover {
+    background: var(--bg-muted);
+    color: var(--text-primary);
+}
+
+.nav-tab.active {
+    background: var(--primary-light);
+    color: var(--primary);
+    border-color: rgba(5, 150, 105, 0.2);
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.ws-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-full);
+    background: var(--live-bg);
+    color: var(--live-text);
+    border: 1px solid rgba(220, 38, 38, 0.2);
+}
+
+.ws-badge.connected {
+    background: var(--completed-bg);
+    color: var(--completed-text);
+    border-color: rgba(22, 163, 74, 0.2);
+}
+
+.pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: currentColor;
+    animation: pulse 1.8s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.95); opacity: 0.8; }
+    50% { transform: scale(1.3); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+.theme-toggle-btn {
+    background: var(--bg-muted);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 0.45rem 0.75rem;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+/* ==========================================================================
+   Live Matches Ticker Strip
+   ========================================================================== */
+.ticker-strip {
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.6rem 1.5rem;
+    overflow-x: auto;
+    white-space: nowrap;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.ticker-strip::-webkit-scrollbar {
+    height: 4px;
+}
+.ticker-strip::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+.ticker-card {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--bg-page);
+    border: 1px solid var(--border-color);
+    padding: 0.45rem 0.9rem;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-size: 0.825rem;
+}
+
+.ticker-card:hover, .ticker-card.active {
+    border-color: var(--primary);
+    background: var(--primary-light);
+}
+
+.ticker-teams {
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.ticker-score {
+    font-family: var(--font-mono);
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.ticker-live-pill {
+    background: var(--live-text);
+    color: #ffffff;
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 0.1rem 0.4rem;
+    border-radius: var(--radius-full);
+}
+
+/* ==========================================================================
+   Main Container
+   ========================================================================== */
+.main-wrapper {
+    max-width: 1380px;
+    margin: 1.5rem auto;
+    padding: 0 1.5rem 3rem 1.5rem;
+}
+
+/* ==========================================================================
+   Hero Live Scorecard (Big Match Center)
+   ========================================================================== */
+.hero-match-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.hero-match-header {
+    background: linear-gradient(to right, #ffffff, var(--bg-muted));
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+[data-theme="dark"] .hero-match-header {
+    background: linear-gradient(to right, #1e293b, #0f172a);
+}
+
+.hero-match-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.badge-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-full);
+    text-transform: uppercase;
+}
+
+.badge-live {
+    background: var(--live-bg);
+    color: var(--live-text);
+    border: 1px solid rgba(220,38,38,0.2);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.badge-format {
+    background: var(--accent-light);
+    color: var(--accent);
+    border: 1px solid rgba(37,99,235,0.2);
+}
+
+.hero-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-ctrl {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.85rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    transition: all 0.15s ease;
+}
+
+.btn-ctrl:hover {
+    background: var(--bg-hover);
+    border-color: var(--text-muted);
+}
+
+.btn-ctrl.btn-primary {
+    background: var(--primary);
+    color: #ffffff;
+    border-color: var(--primary);
+}
+
+.btn-ctrl.btn-primary:hover {
+    background: var(--primary-dark);
+}
+
+/* Big Scores Section */
+.hero-scores-grid {
+    padding: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 2rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+@media (max-width: 768px) {
+    .hero-scores-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        text-align: center;
+    }
+}
+
+.team-score-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.team-score-block.right {
+    text-align: right;
+}
+
+.team-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.team-score-block.right .team-title-row {
+    justify-content: flex-end;
+}
+
+.flag-emoji {
+    font-size: 1.6rem;
+}
+
+.team-score-display {
+    font-family: var(--font-mono);
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--text-primary);
+    margin-top: 0.35rem;
+}
+
+.team-overs-display {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.vs-divider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-weight: 800;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+/* Match Status Banner (CRR, RRR, Target, Result) */
+.match-status-bar {
+    background: var(--bg-muted);
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.875rem;
+}
+
+.rate-stat {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.rate-stat strong {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.match-verdict {
+    font-weight: 700;
+    color: var(--primary);
+}
+
+/* Live Active Player Widgets (Batter & Bowler on the fly) */
+.hero-live-widgets {
+    padding: 1.25rem 1.5rem;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 1.5rem;
+    background: var(--bg-surface);
+}
+
+@media (max-width: 900px) {
+    .hero-live-widgets {
+        grid-template-columns: 1fr;
+    }
+}
+
+.live-widget-card {
+    background: var(--bg-page);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+}
+
+.widget-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.batter-table, .bowler-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.batter-table th, .bowler-table th {
+    text-align: right;
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.75rem;
+    padding-bottom: 0.4rem;
+}
+
+.batter-table th:first-child, .bowler-table th:first-child {
+    text-align: left;
+}
+
+.batter-table td, .bowler-table td {
+    padding: 0.4rem 0;
+    text-align: right;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.batter-table td:first-child, .bowler-table td:first-child {
+    text-align: left;
+}
+
+.striker-star {
+    color: var(--primary);
+    font-weight: 900;
+}
+
+.striker-row {
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.over-balls-row {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.75rem;
+}
+
+.ball-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+}
+
+.ball-circle.w { background: var(--wicket-bg); color: var(--wicket-text); }
+.ball-circle.six { background: var(--six-bg); color: var(--six-text); }
+.ball-circle.four { background: var(--four-bg); color: var(--four-text); }
+.ball-circle.dot { background: var(--dot-bg); color: var(--dot-text); }
+.ball-circle.runs { background: var(--primary-light); color: var(--primary); border: 1px solid rgba(5,150,105,0.3); }
+.ball-circle.extra { background: var(--extra-bg); color: var(--extra-text); }
+
+/* ==========================================================================
+   Tab Navigation for Match Details
+   ========================================================================== */
+.tabs-navigation {
+    display: flex;
+    gap: 0.25rem;
+    border-bottom: 2px solid var(--border-color);
+    margin-bottom: 1.5rem;
+    overflow-x: auto;
+}
+
+.tab-btn {
+    padding: 0.75rem 1.25rem;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-secondary);
+    font-size: 0.925rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    margin-bottom: -2px;
+    transition: all 0.15s ease;
+}
+
+.tab-btn:hover {
+    color: var(--primary);
+}
+
+.tab-btn.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+}
+
+/* ==========================================================================
+   Data Tables (Scorecard, Squads, Commentary)
+   ========================================================================== */
+.scorecard-section {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.scorecard-header {
+    background: var(--bg-muted);
+    padding: 0.75rem 1.25rem;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.scorecard-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+.scorecard-table th {
+    background: var(--bg-surface);
+    padding: 0.75rem 1.25rem;
+    text-align: right;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.775rem;
+    text-transform: uppercase;
+}
+
+.scorecard-table th:first-child,
+.scorecard-table th:nth-child(2) {
+    text-align: left;
+}
+
+.scorecard-table td {
+    padding: 0.75rem 1.25rem;
+    text-align: right;
+    border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+}
+
+.scorecard-table td:first-child,
+.scorecard-table td:nth-child(2) {
+    text-align: left;
+}
+
+.scorecard-table tr:hover {
+    background-color: var(--bg-hover);
+}
+
+.player-name-bold {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.dismissal-info {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.num-cell-highlight {
+    font-weight: 700;
+    font-family: var(--font-mono);
+}
+
+.fow-container {
+    padding: 1rem 1.25rem;
+    background: var(--bg-page);
+    border-top: 1px solid var(--border-color);
+    font-size: 0.825rem;
+}
+
+.fow-title {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.fow-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.fow-chip {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+}
+
+/* ==========================================================================
+   Commentary Stream
+   ========================================================================== */
+.commentary-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.commentary-item {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1.2rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: background 0.15s ease;
+}
+
+.commentary-item:hover {
+    background: var(--bg-hover);
+}
+
+.commentary-over {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    background: var(--bg-muted);
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    min-width: 44px;
+    text-align: center;
+}
+
+.commentary-text {
+    flex: 1;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    line-height: 1.4;
+}
+
+.commentary-item.boundary {
+    border-left: 4px solid var(--accent);
+}
+
+.commentary-item.six {
+    border-left: 4px solid var(--six-bg);
+}
+
+.commentary-item.wicket {
+    border-left: 4px solid var(--wicket-bg);
+    background: #fff5f5;
+}
+
+[data-theme="dark"] .commentary-item.wicket {
+    background: #2a1515;
+}
+
+/* ==========================================================================
+   Leaderboards & Player Stats
+   ========================================================================== */
+.leaderboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+.leaderboard-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.leaderboard-header {
+    background: var(--bg-muted);
+    padding: 0.85rem 1.25rem;
+    font-weight: 700;
+    font-size: 0.95rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* ==========================================================================
+   Create Match Form
+   ========================================================================== */
+.form-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 2rem;
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.4rem;
+}
+
+.form-input, .form-select {
+    width: 100%;
+    padding: 0.65rem 0.9rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    background: var(--bg-input);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.15s ease;
+}
+
+.form-input:focus, .form-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.15s ease;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+}
+
+.btn-secondary {
+    background: var(--bg-muted);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+    background: var(--bg-hover);
+}
+
+.btn-danger {
+    background: #fee2e2;
+    color: #dc2626;
+    border-color: #fca5a5;
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+    color: #ffffff;
+}
+
+/* Empty States */
+.empty-state {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    color: var(--text-muted);
+}
+
+.empty-state svg {
+    margin-bottom: 1rem;
+    color: var(--text-muted);
+}

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CricLive — Live Cricket Score Management & Simulation System</title>
+    <meta name="description" content="Real-time scalable cricket score management platform with live ball-by-ball updates, detailed scorecards, player statistics, and match analysis.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div style="display:flex;align-items:center;gap:1.5rem;">
+                <a href="#" class="nav-brand" onclick="loadMatches()">
+                    <div class="brand-icon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M4.93 4.93l4.24 4.24"></path>
+                            <path d="M14.83 14.83l4.24 4.24"></path>
+                            <path d="M14.83 9.17l4.24-4.24"></path>
+                            <path d="M4.93 19.07l4.24-4.24"></path>
+                        </svg>
+                    </div>
+                    <span>Cric<span style="color:var(--primary);">Live</span></span>
+                    <span class="brand-badge">PRO SCOREBOARD</span>
+                </a>
+
+                <nav class="nav-menu">
+                    <button class="nav-tab active" onclick="loadMatches()">
+                        <span>🏏 Live Matches</span>
+                    </button>
+                    <button class="nav-tab" onclick="showCreateMatchModal()">
+                        <span>➕ New Match</span>
+                    </button>
+                    <button class="nav-tab" onclick="switchDetailTab('leaderboard')">
+                        <span>🏆 Leaderboard</span>
+                    </button>
+                </nav>
+            </div>
+
+            <div class="nav-actions">
+                <span class="ws-badge" id="wsStatusBadge">
+                    <span class="pulse-dot"></span>
+                    <span>Connecting...</span>
+                </span>
+
+                <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle White/Dark mode">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    Dark Mode
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Real-time Live Matches Ticker Strip -->
+    <div class="ticker-strip" id="matchTickerStrip">
+        <span style="font-size:0.85rem;color:var(--text-muted);">Loading ongoing matches...</span>
+    </div>
+
+    <!-- Main Container -->
+    <main class="main-wrapper">
+        <!-- Active Live Match Dashboard & Detailed Tabs -->
+        <div id="activeMatchContainer">
+            <div class="empty-state">
+                <div class="pulse-dot" style="margin:0 auto 1rem auto;width:16px;height:16px;"></div>
+                <p>Initializing real-time cricket simulator...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Application Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
